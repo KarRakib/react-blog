@@ -1,6 +1,6 @@
 
 import axios from 'axios';
-import { Link,useLocation, useNavigate  } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 
 import React from 'react'
 import { AiOutlineDeploymentUnit } from 'react-icons/ai';
@@ -13,37 +13,39 @@ import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter'
 import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
 
+
 const BlogSlug = () => {
     const location = useLocation();
-  
+
     const pathname = location.pathname;
     const slug = pathname.split('/').pop();
-    console.log(slug);
-    const [blog, setBlog] = React.useState([]); // Change initial state to null
-    const [loader, setLoader] = React.useState(true);
+    // console.log(slug);
 
+    const [blog, setBlog] = React.useState({}); // Change initial state to null
+    const [loader, setLoader] = React.useState(true);
+    console.log(blog);
     React.useEffect(() => {
         const fetchBlogData = async () => {
             if (!slug) {
                 navigate('/404');
                 return;
-              }
-        
-              try {
+            }
+
+            try {
                 const response = await fetch(`http://localhost:5000/blogs?slug=${slug}`);
                 const data = await response.json();
                 console.log(data);
                 setLoader(true)
                 setBlog(data);
-              } catch (error) {
+            } catch (error) {
                 console.error('Error fetching blog data:', error);
                 // navigate('/404');
-              } finally {
+            } finally {
                 setLoader(false);
-              }
-            };
-        
-            fetchBlogData();
+            }
+        };
+
+        fetchBlogData();
     }, [slug]);
 
     const Code = ({ node, inline, className, children, ...props }) => {
@@ -86,8 +88,10 @@ const BlogSlug = () => {
             )
         }
     }
+
+
     return (
-        <div className='slugpage'>
+        <div className='slugpage py-3'>
             <div className="container">
                 <div className="topslug_titles">
                     <h1 className="slugtitle">
@@ -101,20 +105,20 @@ const BlogSlug = () => {
                 </div>
                 <div className="flex flex-sb flex-left pb-5 flex-wrap">
                     <div className="leftblog_data_markdown">
-                        {loader ? <div className='wh-100 flex flex-center mt-3'> <div className="loader"></div>
-                        </div> : <>
-                            <div className="w-100 blogcontent">
-                                <ReactMarkdown
-                                    remarkPlugins={[remarkGfm]} // Pass an array of plugins
-                                    components={{
-                                        code: Code,
-                                    }}
-                                >
-                                    {blog[0]?.description}
-                                </ReactMarkdown>
-                                {blog[0]?.description}
-                            </div>
-                        </>
+                        {loader ? <div className='wh-100 flex flex-center mt-3'>  <div className="loader"></div> </div>
+                            : <>
+                                <div className="w-100 blogcontent">
+                                    <ReactMarkdown
+                                        remarkPlugins={[remarkGfm]} // Pass an array of plugins
+                                        components={{
+                                            code: Code,
+                                        }}
+                                    >
+                                        {blog[0]?.description}
+                                    </ReactMarkdown>
+                                    {/* {blog[0]?.description} */}
+                                </div>
+                            </>
 
                         }
                     </div>
@@ -125,10 +129,9 @@ const BlogSlug = () => {
                                 <div className="slug_profile_img">
                                     <div className="image_bg_top0"></div>
                                     <div className="image_bg_top1"></div>
-                                    <img src="/Kar_Rakib.png" alt="kar ra kib" />
+                                    <img src={blog.image} alt={blog.name} />
                                 </div>
-                                <h3>Use Name</h3>
-                                <h4>About author</h4>
+                                <h3>{blog.name}</h3>
                                 <div className="socail_talks flex flex-center gap-1 mt-2">
                                     <div className="st_icon">
                                         <FaGithub />
@@ -181,6 +184,9 @@ const BlogSlug = () => {
                             </div>
                         </div>
                     </div>
+                </div>
+                <div>
+                    Add Comment
                 </div>
             </div>
         </div>

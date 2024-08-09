@@ -66,11 +66,12 @@ const Home = () => {
           <div className="leftblog_sec">
             <h2>Recently Published</h2>
             <div className="blogs_sec">
-              {loading ? <div className='wh_100 flex flex-center mt-2 pb-5'>
+              {loading ? <div className='loader-container'>
                 <div className='loader'></div>
               </div> : <>  {
                 publishedBlogs?.map((blog) => {
                   const firstImagUrl = extractFirstImageUrl(blog.description);
+                  console.log(firstImagUrl);
                   return <div className='card_container' key={blog._id}>
                     <div className="card">
                      <Link to={`/blog/${blog.slug}`}>

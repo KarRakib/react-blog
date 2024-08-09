@@ -9,6 +9,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import { UserContext } from '../Context/AuthContext';
 import Loader from './Loader';
 import DataLoader from './DataLoader';
+import toast from 'react-hot-toast';
 
 const AllBlogs = () => {
   const { user, } = useContext(UserContext);
@@ -19,8 +20,8 @@ const AllBlogs = () => {
   useEffect(() => {
     const fetchBlogData = async () => {
       try {
-        //   const res = await axios.get(`http://localhost:5000/blog?email=${user.email}`);
-        const res = await axios.get('http://localhost:5000/blog');
+          const res = await axios.get(`http://localhost:5000/blog?email=${user.email}`);
+        // const res = await axios.get('http://localhost:5000/blog');
         const allData = res.data;
         setAllData(allData);
         setLoading(false);
@@ -66,6 +67,8 @@ const AllBlogs = () => {
       try {
         axios.delete(`http://localhost:5000/blog?id=${id}`)
         console.log('delete successfull');
+        toast.success("Delete Success")
+        setAllData((pre)=> pre.filter((blog)=> blog._id !==id))
       } catch (error) {
         console.error('Error Deleting blog:', error);
       }

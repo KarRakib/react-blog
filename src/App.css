@@ -326,6 +326,7 @@ button {
   justify-content: space-between;
   color: #02070f;
   padding: .5rem 0;
+  height: 200px;
 }
 
 .dark .header {
@@ -865,6 +866,14 @@ button {
   }
 }
 
+/* Centering the Loader */
+.loader-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh; /* Full viewport height */
+  width: 100%;
+}
 
 
 

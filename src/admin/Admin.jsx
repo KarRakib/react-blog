@@ -36,17 +36,21 @@ export default function Admin() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const res = await fetch('http://localhost:5000/blog');
+        const res = await fetch(`http://localhost:5000/blog?email=${user?.email}`);
+        if (!res.ok) {
+          throw new Error(`HTTP error! status: ${res.status}`);
+        }
         const data = await res.json();
-
+        console.log('user',data);
         setBlogsData(data);
       } catch (error) {
         console.log('Error Fetching Data', error);
       }
     };
-
+  
     fetchData();
-  }, []);
+  }, [user?.email]);
+  
 
   // Display a loader while user data is being fetched
   if (loading) {

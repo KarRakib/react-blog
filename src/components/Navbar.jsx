@@ -55,6 +55,9 @@ const Navbar = () => {
     const publishedBlogs = allData?.filter(item => item.status === 'publish')
     console.log('pub nav', publishedBlogs);
     const [searchQuary, setSearchQuery] = useState('')
+const handleQuery  = () =>{
+    setSearchQuery('')
+}
     const searchfiltered = searchQuary.trim() === '' ? publishedBlogs : publishedBlogs.filter(item => item.title.toLowerCase().includes(searchQuary.toLowerCase()));
     return (
         <>
@@ -73,7 +76,7 @@ const Navbar = () => {
                     <div className="nav_list_dark">
                         <ul>
                             <li><Link to='/'> HOME</Link> </li>
-                            {user?.email ? <> <li><Link to='/admin/add_blog'> Add Blog</Link> </li> <li><Link to='/admin'> Dashboard</Link> </li></> : <><li><Link to='/login'> LogIn  </Link> </li>
+                            {user?.email ? <> <li><Link to='/admin/addblog'> Add Blog</Link> </li> <li><Link to='/admin'> Dashboard</Link> </li></> : <><li><Link to='/login'> LogIn  </Link> </li>
                                 <li><Link to='/signin'> SignIn </Link> </li></>}
                         </ul>
                         {/* for mobile device */}
@@ -110,7 +113,7 @@ const Navbar = () => {
                                             {
                                                 searchfiltered.slice(0, 3).map((blog) => (
                                                     <Link onClick={closeSearch} to={`/blog/${blog.slug}`} className='blog' key={blog._id}  >
-                                                        <div className="bloginfo">
+                                                        <div onClick={handleQuery} className="bloginfo">
                                                             <h3> <h3>{blog.slug}</h3> </h3>
                                                             <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Doloremque, perferendis est. Quo, quasi!</p>
 

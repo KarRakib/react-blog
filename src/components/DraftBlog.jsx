@@ -10,9 +10,10 @@ import { RiDeleteBackFill } from 'react-icons/ri';
 
 
 const DraftBlogs = () => {
-
+  const { user} = useContext(UserContext);
+  console.log(user.email);
     // const [allData, loading] = useFetchData('http://localhost:5000/blog');
-    const { data: allData, loading, error } = useFetchData(true, 'http://localhost:5000/blog');
+    const { data: allData, loading, error } = useFetchData(true, `http://localhost:5000/blog?email=${user?.email}`);
     const [currentPage, setCurrentPage] = useState(1);
     console.log(allData);
     const [perPage] = useState(4);
@@ -32,7 +33,7 @@ const DraftBlogs = () => {
       pageNumbers.push(index);
   
     }
-    const { user} = useContext(UserContext);
+
     const navigate = useNavigate();
     useEffect(() => {
         if (!user) {
